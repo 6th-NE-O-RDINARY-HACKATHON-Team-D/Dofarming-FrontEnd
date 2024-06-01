@@ -40,9 +40,10 @@ const Calendar = () => {
       }}
       // eslint-disable-next-line react-native/no-inline-styles
       style={{
+        marginTop: 30,
         paddingLeft: 20,
         paddingRight: 20,
-        height: 390,
+        height: 400,
       }}
       theme={{
         todayTextColor: '#393F46',

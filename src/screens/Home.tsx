@@ -1,4 +1,4 @@
-import {View, StyleSheet, Button, Animated} from 'react-native';
+import {StyleSheet, Animated, View} from 'react-native';
 import React from 'react';
 import Calendar from '../componets/calendar/Calendar';
 import HomeBottomSheet from '../components/common/HomeBottomSheet';
@@ -41,19 +41,7 @@ const Home = () => {
         resizeMode="cover"
       />
       <Calendar />
-      {/* <Toast
-        mission="술 대신 콜라를 마시는 건 어떨까요"
-        type="digital"
-        color={'dark'}
-      />
-      <Toast
-        mission="술 대신 콜라를 마시는 건 어떨까요"
-        type="digital"
-        color={'light'}
-        date="2024.06.01 21:52"
-      /> */}
-      <HomeBottomSheet />
-      <Button title="Trigger" onPress={triggerConfetti} />
+      <HomeBottomSheet triggerConfetti={triggerConfetti} />
     </View>
   );
 };
@@ -63,6 +51,9 @@ export default Home;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    backgroundColor: '#f6f7f8',
   },
   lottie: {
     position: 'absolute',
@@ -82,6 +73,7 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     zIndex: 1000,
+    elevation: 4,
     pointerEvents: 'none',
     alignItems: 'center',
     justifyContent: 'center',
