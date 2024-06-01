@@ -6,10 +6,11 @@ import dayjs from 'dayjs';
 import {Text} from 'react-native';
 import styled from 'styled-components/native';
 
-const Calendar = () => {
+const Calendar = (missions: any) => {
   const [selectedDate, setSelectedDate] = useState(
     dayjs().format('YYYY-MM-DD'),
   );
+  console.log(missions);
 
   return (
     <RNCalendar
