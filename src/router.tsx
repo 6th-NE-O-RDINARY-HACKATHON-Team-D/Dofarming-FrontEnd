@@ -5,6 +5,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import Home from './screens/Home';
 import Profile from './screens/Profile';
+import TestResult from './screens/TestResult';
 
 type MainTabParamList = {
   Home: undefined;
@@ -12,6 +13,7 @@ type MainTabParamList = {
 };
 
 type RootStackParamList = {
+  TestResult: undefined;
   MainTab: undefined;
 };
 
@@ -34,6 +36,7 @@ const Router = () => {
         headerShown: false,
       }}>
       <Stack.Screen name="MainTab" component={MainTab} />
+      <Stack.Screen name="TestResult" component={TestResult} />
     </Stack.Navigator>
   );
 };
