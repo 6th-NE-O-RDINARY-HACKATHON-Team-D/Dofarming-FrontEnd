@@ -17,20 +17,12 @@ const Home = () => {
   const [error, setError] = useState<any>(null);
 
   const today = new Date();
-  const year = today.getFullYear();
-  const month = String(today.getMonth() + 1).padStart(2, '0');
-  const day = String(today.getDate()).padStart(2, '0');
-
-  const todayString = `${year}-${month}-${day}`;
 
   useEffect(() => {
     const fetchMission = async () => {
       try {
-        const response = await axiosInstance.get(
-          '/api/v1/missions?date=' + todayString,
-        );
-        // console.log('response', response.data.result);
-        setTodayMission(response.data.result);
+        const response = await axiosInstance.get('/api/v1/missions/calender');
+        setTodayMission(response.data.result.todayMission);
         setLoading(false);
       } catch (error) {
         console.log('error', error);
