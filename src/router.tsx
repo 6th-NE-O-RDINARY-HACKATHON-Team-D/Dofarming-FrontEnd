@@ -6,6 +6,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Home from './screens/Home';
 import Profile from './screens/Profile';
 import TestResult from './screens/TestResult';
+import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 
 type MainTabParamList = {
   Home: undefined;
@@ -22,10 +23,12 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const MainTab = () => {
   return (
-    <Tab.Navigator initialRouteName="Home">
-      <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Profile" component={Profile} />
-    </Tab.Navigator>
+    <BottomSheetModalProvider>
+      <Tab.Navigator initialRouteName="Home">
+        <Tab.Screen name="Home" component={Home} />
+        <Tab.Screen name="Profile" component={Profile} />
+      </Tab.Navigator>
+    </BottomSheetModalProvider>
   );
 };
 
