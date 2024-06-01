@@ -4,6 +4,8 @@ import styled from 'styled-components/native';
 import {Text} from 'react-native';
 import PhotoIcon from '../../assets/vectors/photo-icon.svg';
 import GalleryIcon from '../../assets/vectors/gallery-icon.svg';
+import Toast from './Toast';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const HomeBottomSheet = () => {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
@@ -24,7 +26,13 @@ const HomeBottomSheet = () => {
 
   return (
     <Container>
-      {/* <ModalBtn onPress={handlePresentModalPress} /> */}
+      <TouchableOpacity onPress={handlePresentModalPress}>
+        <Toast
+          mission="술 대신 콜라를 마시는 건 어떨까요"
+          type="digital"
+          color={'dark'}
+        />
+      </TouchableOpacity>
       <BottomSheetModal
         ref={bottomSheetModalRef}
         index={1}
