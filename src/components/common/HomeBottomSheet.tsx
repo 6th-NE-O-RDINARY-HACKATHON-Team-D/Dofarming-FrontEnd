@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo, useRef} from 'react';
+import React, {useCallback, useMemo, useRef, useState} from 'react';
 import {BottomSheetBackdrop, BottomSheetModal} from '@gorhom/bottom-sheet';
 import styled from 'styled-components/native';
 import {Text} from 'react-native';
@@ -7,9 +7,14 @@ import GalleryIcon from '../../assets/vectors/gallery-icon.svg';
 import Toast from './Toast';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
-const HomeBottomSheet = () => {
+interface Props {
+  triggerConfetti: () => void;
+}
+
+const HomeBottomSheet = ({triggerConfetti}: Props) => {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
-  const snapPoints = useMemo(() => ['1%', '40%'], []);
+  const snapPoints = useMemo(() => ['1%', '35%'], []);
+  const [clear, setClear] = useState<boolean>(false);
 
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
@@ -26,13 +31,32 @@ const HomeBottomSheet = () => {
 
   return (
     <Container>
-      <TouchableOpacity onPress={handlePresentModalPress}>
-        <Toast
-          mission="술 대신 콜라를 마시는 건 어떨까요"
-          type="digital"
-          color={'dark'}
-        />
-      </TouchableOpacity>
+      {clear ? (
+        <>
+          <ImageView
+            source={require('../../assets/image/mock-image.png')}
+            resizeMode="cover">
+            <ToastBottomView>
+              <Toast
+                mission="술 대신 콜라를 마시는 건 어떨까요"
+                type="digital"
+                color={'light'}
+                date="2024.06.01 21:52"
+              />
+            </ToastBottomView>
+          </ImageView>
+        </>
+      ) : (
+        <ToastTopView>
+          <TouchableOpacity onPress={handlePresentModalPress}>
+            <Toast
+              mission="술 대신 콜라를 마시는 건 어떨까요"
+              type="digital"
+              color={'dark'}
+            />
+          </TouchableOpacity>
+        </ToastTopView>
+      )}
       <BottomSheetModal
         ref={bottomSheetModalRef}
         index={1}
@@ -46,7 +70,7 @@ const HomeBottomSheet = () => {
               <PhotoIcon />
               <Text>사진 찍기</Text>
             </ChildBtn>
-            <ChildBtn>
+            <ChildBtn onPress={triggerConfetti}>
               <GalleryIcon />
               <Text>앨범에서 선택</Text>
             </ChildBtn>
@@ -59,14 +83,26 @@ const HomeBottomSheet = () => {
 
 const Container = styled.View`
   flex: 1;
-  justify-content: center;
+  justify-content: start;
+`;
+
+const ImageView = styled.ImageBackground`
+  height: 100%;
+`;
+
+const ToastTopView = styled.View`
+  padding-top: 20px;
+`;
+
+const ToastBottomView = styled.View`
+  padding-top: 230px;
 `;
 
 const ChildView = styled.View`
   padding-top: 15px;
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-bottom: 50px;
+  padding-left: 24px;
+  padding-right: 24px;
+  padding-bottom: 62px;
   flex: 1;
   display: flex;
   flex-direction: column;
