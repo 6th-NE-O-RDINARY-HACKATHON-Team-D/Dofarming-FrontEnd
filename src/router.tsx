@@ -7,6 +7,8 @@ import Home from './screens/Home';
 import Profile from './screens/Profile';
 import TestResult from './screens/TestResult';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
+import SplashScreen from './screens/Splash';
+import Onboarding from './screens/Onboarding';
 
 type MainTabParamList = {
   Home: undefined;
@@ -24,7 +26,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 const MainTab = () => {
   return (
     <BottomSheetModalProvider>
-      <Tab.Navigator initialRouteName="Home">
+      <Tab.Navigator>
         <Tab.Screen name="Home" component={Home} />
         <Tab.Screen name="Profile" component={Profile} />
       </Tab.Navigator>
@@ -35,9 +37,12 @@ const MainTab = () => {
 const Router = () => {
   return (
     <Stack.Navigator
+      initialRouteName="Splash"
       screenOptions={{
         headerShown: false,
       }}>
+      <Stack.Screen name="Splash" component={SplashScreen} />
+      <Stack.Screen name="Onboarding" component={Onboarding} />
       <Stack.Screen name="MainTab" component={MainTab} />
       <Stack.Screen name="TestResult" component={TestResult} />
     </Stack.Navigator>
