@@ -80,6 +80,7 @@ const MyDopamine = ({navigation}: any) => {
   const replayIcon = require('../assets/icons/replay.png');
   const testAgainHandler = () => {
     console.log('다시 진단하기');
+    navigation.navigate('Test');
   };
   return (
     <SafeAreaView style={styles.container}>

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import LeftArrowIcon from '../../assets/vectors/LeftArrowIcon';
 import RightArrowIcon from '../../assets/vectors/RightArrowIcon';
+import {useNavigation} from '@react-navigation/native';
 const Button = ({
   direction,
   onPress,
@@ -18,8 +19,9 @@ const Button = ({
 };
 
 export const SubmittButton = () => {
+  const navigation = useNavigation();
   return (
-    <SubmitBox>
+    <SubmitBox onPress={() => navigation.navigate('TestResult')}>
       <SubmitText>완료하기</SubmitText>
     </SubmitBox>
   );

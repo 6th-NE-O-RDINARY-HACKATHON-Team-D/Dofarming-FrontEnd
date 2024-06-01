@@ -12,6 +12,7 @@ import MyDopamine from './screens/MyDopamine';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import SplashScreen from './screens/Splash';
 import Onboarding from './screens/Onboarding';
+import Test from './screens/Test';
 
 type MainTabParamList = {
   Home: undefined;
@@ -30,7 +31,6 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 const MainTab = () => {
   return (
     <BottomSheetModalProvider>
-
       <Tab.Navigator
         initialRouteName="Home"
         screenOptions={({route}) => ({
@@ -62,7 +62,6 @@ const MainTab = () => {
         })}>
         <Tab.Screen name="Home" component={Home} options={{title: ''}} />
         <Tab.Screen name="Profile" component={Profile} options={{title: ''}} />
-
       </Tab.Navigator>
     </BottomSheetModalProvider>
   );
@@ -71,12 +70,13 @@ const MainTab = () => {
 const Router = () => {
   return (
     <Stack.Navigator
-      initialRouteName="Splash"
+      // initialRouteName="Splash"
       screenOptions={{
         headerShown: false,
       }}>
       <Stack.Screen name="Splash" component={SplashScreen} />
       <Stack.Screen name="Onboarding" component={Onboarding} />
+      <Stack.Screen name="Test" component={Test} />
       <Stack.Screen name="MainTab" component={MainTab} />
       <Stack.Screen name="TestResult" component={TestResult} />
       <Stack.Screen name="MyDopamine" component={MyDopamine} />

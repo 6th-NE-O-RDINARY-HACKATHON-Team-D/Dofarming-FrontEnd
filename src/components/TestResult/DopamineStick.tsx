@@ -20,6 +20,7 @@ const DopamineStick = ({categoryList}: DopamineStickProp) => {
       <View style={styles.myDopamineStick}>
         {categoryList.map(e => (
           <View
+            key={e.color}
             style={{
               width: (width - 48 - 18) * (e.ratio / 100),
               backgroundColor: e.color,
