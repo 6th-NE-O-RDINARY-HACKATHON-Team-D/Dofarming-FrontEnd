@@ -13,7 +13,7 @@ const Onboarding = () => {
     setLoading(true); // 로딩 상태를 true로 설정하여 로딩 화면을 표시합니다.
 
     setTimeout(() => {
-      navigation.navigate('MainTab');
+      navigation.navigate('Test');
       setLoading(false); // 로딩 상태를 false로 설정하여 로딩 화면을 숨깁니다.
     }, 2000);
   };

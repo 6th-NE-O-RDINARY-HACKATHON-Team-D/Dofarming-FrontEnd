@@ -31,11 +31,14 @@ const TestResult = ({navigation}: any) => {
           <Text>다시하기</Text>
         </TouchableOpacity>
         {activate ? (
-          <TouchableOpacity style={[styles.btn, {backgroundColor: '#000'}]}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('MainTab')}
+            style={[styles.btn, {backgroundColor: '#000'}]}>
             <Text style={{color: '#fff'}}>디파밍 시작하기</Text>
           </TouchableOpacity>
         ) : (
           <TouchableOpacity
+            onPress={() => navigation.navigate('MainTab')}
             style={[styles.btn, {backgroundColor: 'lightgray'}]}>
             <Text style={{color: 'gray3'}}>디파밍 시작하기</Text>
           </TouchableOpacity>
