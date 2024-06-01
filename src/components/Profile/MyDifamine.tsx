@@ -157,5 +157,6 @@ const styles = StyleSheet.create({
   category: {
     padding: 20,
     backgroundColor: '#fff',
+    marginBottom: 40,
   },
 });

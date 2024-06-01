@@ -1,4 +1,4 @@
-import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
+import {Text, View, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import React from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useDopamineCategory} from '../store/dopamine';
@@ -12,7 +12,9 @@ const Profile = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.myProfile}>
-        <View style={styles.profileImg} />
+        <View style={styles.profileImg}>
+          <Image source={require('../assets/image/Profile.png')} />
+        </View>
         <View style={styles.profileInfo}>
           <Text style={styles.profileName}>도밤희</Text>
           <TouchableOpacity style={styles.profileEditBtn}>
@@ -53,11 +55,14 @@ const styles = StyleSheet.create({
   profileName: {
     fontSize: 24,
     lineHeight: 32,
+    fontWeight: '600',
+    marginLeft: 8,
+    marginTop: 8,
   },
   profileEditBtn: {
     paddingVertical: 4,
     paddingHorizontal: 12,
-    backgroundColor: '#f6f7f8',
+    backgroundColor: '#F6F7F8',
     borderRadius: 15,
   },
   profileEditBtnText: {
