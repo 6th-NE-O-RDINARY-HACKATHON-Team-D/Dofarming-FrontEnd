@@ -4,6 +4,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {useDopamineCategory} from '../store/dopamine';
 import DopamineStick from '../components/TestResult/DopamineStick';
 import {useNavigation} from '@react-navigation/native';
+import MyDifamine from '../components/Profile/MyDifamine';
 
 const Profile = () => {
   const {categoryList} = useDopamineCategory();
@@ -22,6 +23,7 @@ const Profile = () => {
       <TouchableOpacity onPress={() => navigation.navigate('MyDopamine')}>
         <DopamineStick categoryList={categoryList} />
       </TouchableOpacity>
+      <MyDifamine />
     </SafeAreaView>
   );
 };
