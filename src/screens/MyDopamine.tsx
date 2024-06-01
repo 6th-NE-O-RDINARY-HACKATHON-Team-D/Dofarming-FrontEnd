@@ -144,8 +144,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'absolute',
     padding: 16,
-    bottom: 0,
+    bottom: 27,
     left: 0,
+    borderRadius: 12,
   },
   left: {
     flexDirection: 'row',
