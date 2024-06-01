@@ -1,6 +1,4 @@
 import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
-import leftArrow from '../../assets/icons/chevron-left.png';
-import rightArrow from '../../assets/icons/chevron-right.png';
 import React from 'react';
 
 type headerProp = {
@@ -11,6 +9,8 @@ type headerProp = {
 };
 
 const Header = ({left, leftHandler, right, rightHandler}: headerProp) => {
+  const leftArrow = require('../../assets/icons/chevron-left.png');
+  const rightArrow = require('../../assets/icons/chevron-right.png');
   return (
     <View style={styles.header}>
       {left ? (
