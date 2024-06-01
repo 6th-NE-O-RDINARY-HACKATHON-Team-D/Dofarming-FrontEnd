@@ -9,9 +9,10 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 
 interface Props {
   triggerConfetti: () => void;
+  mission: any;
 }
 
-const HomeBottomSheet = ({triggerConfetti}: Props) => {
+const HomeBottomSheet = ({triggerConfetti, mission}: Props) => {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const snapPoints = useMemo(() => ['1%', '35%'], []);
   const [clear, setClear] = useState<boolean>(false);
@@ -49,11 +50,7 @@ const HomeBottomSheet = ({triggerConfetti}: Props) => {
       ) : (
         <ToastTopView>
           <TouchableOpacity onPress={handlePresentModalPress}>
-            <Toast
-              mission="술 대신 콜라를 마시는 건 어떨까요"
-              type="digital"
-              color={'dark'}
-            />
+            <Toast mission={mission} type="digital" color={'dark'} />
           </TouchableOpacity>
         </ToastTopView>
       )}

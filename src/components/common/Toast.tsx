@@ -3,17 +3,7 @@ import {Animated, View} from 'react-native';
 import styled from 'styled-components';
 import ChevronRight from '../../assets/vectors/ChevronRight';
 
-const Toast = ({
-  mission,
-  type,
-  color,
-  date,
-}: {
-  mission: string;
-  type: string;
-  color: 'dark' | 'light';
-  date?: string;
-}) => {
+const Toast = ({mission, type}: {mission: any; type: string}) => {
   const slideAnim = useRef(new Animated.Value(100)).current;
   const fadeAnim = useRef(new Animated.Value(1)).current;
 
@@ -64,24 +54,26 @@ const Toast = ({
   //     };
   //   }, [slideAnim]);
 
+  console.log('s', mission);
   return (
-    <Container style={{backgroundColor: color === 'dark' ? '#393f46' : '#fff'}}>
+    <Container
+      style={{backgroundColor: !mission?.isSuccess ? '#393f46' : '#fff'}}>
       <Box />
       <TextBox>
         <MissionText
-          style={{color: color === 'dark' ? '#fff' : '#000'}}
+          style={{color: !mission?.isSuccess ? '#fff' : '#000'}}
           numberOfLines={1}>
-          {mission}
+          {mission?.missionContent}
         </MissionText>
-        <TimeText style={{color: color === 'dark' ? '#bec6d3' : '#79818F'}}>
-          {date ? date : leftTime + ' 남았어요'}
+        <TimeText style={{color: !mission?.isSuccess ? '#bec6d3' : '#79818F'}}>
+          {mission?.isSuccess ? mission?.updatedAt : leftTime + ' 남았어요'}
         </TimeText>
       </TextBox>
       <Button>
-        <ButtonText style={{color: color === 'dark' ? '#fff' : '#000'}}>
-          {color === 'light' ? '' : '인증하기 '}
+        <ButtonText style={{color: !mission?.isSuccess ? '#fff' : '#000'}}>
+          {mission?.isSuccess ? '' : '인증하기 '}
         </ButtonText>
-        {color === 'dark' ? <ChevronRight /> : <View style={{width: 8}} />}
+        {!mission?.isSuccess ? <ChevronRight /> : <View style={{width: 8}} />}
       </Button>
     </Container>
   );
