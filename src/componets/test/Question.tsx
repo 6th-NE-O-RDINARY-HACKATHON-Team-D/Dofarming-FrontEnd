@@ -47,11 +47,12 @@ const Question = ({question}: {question: string[]}) => {
 
 export default Question;
 
-const Container = styled.View``;
+const Container = styled.ScrollView``;
 
 const Box = styled.View`
   padding: 0 24px;
   gap: 56px;
+  margin-bottom: 100px;
 `;
 
 const QuestionBox = styled.View`
