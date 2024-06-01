@@ -6,62 +6,59 @@ import {
   FlatList,
   Image,
 } from 'react-native';
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 
 interface category {
   title: string;
   ratio: number;
   color: string;
-  name: string;
 }
 
-type DopamineStickProp = {
+type DopamineSelectionProp = {
   categoryList: category[];
-  setActivate2: (value: boolean) => void;
+  setSelectedItem: (value: category) => void;
+  setAddOrRemove: (value: string) => void;
 };
 
-type itemProp = {
+type renderItemProp = {
   item: category;
 };
 
-type categoryItem = {
+type categoryItemProp = {
   item: category;
-  checkNum: number;
-  setCheckNum: (value: number) => void;
+  setSelectedItem: (value: category) => void;
+  setAddOrRemove: (value: string) => void;
 };
 
-type categoryIconProp = {
-  [key: string]: any;
-};
-
-const categoryIcons: categoryIconProp = {
-  digital: require('../../assets/icons/categoryIcon/digitalIcon.png'),
-  drink: require('../../assets/icons/categoryIcon/drinkIcon.png'),
-  food: require('../../assets/icons/categoryIcon/foodIcon.png'),
-  game: require('../../assets/icons/categoryIcon/gameIcon.png'),
-  invest: require('../../assets/icons/categoryIcon/investIcon.png'),
-  shopping: require('../../assets/icons/categoryIcon/shoppingIcon.png'),
-  smoke: require('../../assets/icons/categoryIcon/smokeIcon.png'),
-};
-
-const CategoryItem = ({item, checkNum, setCheckNum}: categoryItem) => {
+const CategoryItem = ({
+  item,
+  setSelectedItem,
+  setAddOrRemove,
+}: categoryItemProp) => {
   const [activate, setActivate] = useState(false);
   const checkIcon = require('../../assets/icons/check.png');
   const checkBlueIcon = require('../../assets/icons/checkBlue.png');
-  const icon = categoryIcons[item.name];
   const handlePress = () => {
+    setSelectedItem(item);
     if (activate) {
-      setCheckNum(checkNum - 1);
+      setAddOrRemove('remove');
     } else {
-      setCheckNum(checkNum + 1);
+      setAddOrRemove('add');
     }
+
     setActivate(!activate);
   };
-
   return (
     <View style={styles.categoryRankingElem}>
       <View style={styles.left}>
-        <Image source={icon} style={{width: 46, height: 46}} />
+        <View
+          style={{
+            width: 46,
+            height: 46,
+            backgroundColor: item.color,
+            borderRadius: 12,
+          }}
+        />
         <View>
           <Text style={styles.categoryTitleText}>{item.title}</Text>
           <Text style={styles.categortyRatioText}>{item.ratio}%</Text>
@@ -82,25 +79,25 @@ const CategoryItem = ({item, checkNum, setCheckNum}: categoryItem) => {
   );
 };
 
-const DopamineRanking = ({categoryList, setActivate2}: DopamineStickProp) => {
-  const [checkNum, setCheckNum] = useState<number>(0);
-  const renderItem = ({item}: itemProp) => {
+const DopamineSelection = ({
+  categoryList,
+  setSelectedItem,
+  setAddOrRemove,
+}: DopamineSelectionProp) => {
+  const renderItem = ({item}: renderItemProp) => {
     return (
-      <CategoryItem item={item} checkNum={checkNum} setCheckNum={setCheckNum} />
+      <CategoryItem
+        item={item}
+        setSelectedItem={setSelectedItem}
+        setAddOrRemove={setAddOrRemove}
+      />
     );
   };
-  useEffect(() => {
-    if (checkNum > 0) {
-      setActivate2(true);
-    } else {
-      setActivate2(false);
-    }
-  }, [checkNum]);
 
   return (
     <View style={styles.categoryRankingContainer}>
       <Text style={styles.categoryRankingTitleText}>
-        개선하고 싶은 항목을 고르세요
+        항목을 수정해 미션을 받을 수 있어요.
       </Text>
       <FlatList
         data={categoryList}
@@ -113,7 +110,7 @@ const DopamineRanking = ({categoryList, setActivate2}: DopamineStickProp) => {
   );
 };
 
-export default DopamineRanking;
+export default DopamineSelection;
 
 const styles = StyleSheet.create({
   //categoryTanking
@@ -146,10 +143,6 @@ const styles = StyleSheet.create({
   categortyRatioText: {
     fontSize: 14,
     color: 'gray',
-  },
-  rightText: {
-    fontSize: 14,
-    lineHeight: 22,
   },
   right: {
     paddingHorizontal: 12,

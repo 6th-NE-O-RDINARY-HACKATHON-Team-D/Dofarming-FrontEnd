@@ -7,56 +7,13 @@ import {
   Image,
 } from 'react-native';
 import React, {useState} from 'react';
-import CATEGORY_COLOR from '../styles/color';
 import Header from '../components/common/Header';
 import DopamineStick from '../components/TestResult/DopamineStick';
 import DopamineRanking from '../components/TestResult/DopamineRanking';
-
-interface category {
-  title: string;
-  ratio: number;
-  color: string;
-}
-
-const categoryList: category[] = [
-  {
-    title: '디지털',
-    ratio: 20,
-    color: CATEGORY_COLOR.orange,
-  },
-  {
-    title: '게임',
-    ratio: 20,
-    color: CATEGORY_COLOR.green,
-  },
-  {
-    title: '흡연',
-    ratio: 15,
-    color: CATEGORY_COLOR.purple,
-  },
-  {
-    title: '과도한 투자',
-    ratio: 15,
-    color: CATEGORY_COLOR.blue,
-  },
-  {
-    title: '쇼핑',
-    ratio: 10,
-    color: CATEGORY_COLOR.lightBlue,
-  },
-  {
-    title: '음식',
-    ratio: 10,
-    color: CATEGORY_COLOR.brown,
-  },
-  {
-    title: '음주',
-    ratio: 10,
-    color: CATEGORY_COLOR.yellow,
-  },
-];
+import {useDopamineCategory} from '../store/dopamine';
 
 const TestResult = ({navigation}: any) => {
+  const {categoryList} = useDopamineCategory();
   const [activate, setActivate] = useState<boolean>(false);
   const replayIcon = require('../assets/icons/replay.png');
   return (
@@ -67,7 +24,7 @@ const TestResult = ({navigation}: any) => {
         right={false}
       />
       <DopamineStick categoryList={categoryList} />
-      <DopamineRanking categoryList={categoryList} />
+      <DopamineRanking categoryList={categoryList} setActivate2={setActivate} />
       <View style={styles.btnGroup}>
         <TouchableOpacity style={styles.btn}>
           <Image source={replayIcon} style={styles.replayIcon} />
@@ -75,12 +32,12 @@ const TestResult = ({navigation}: any) => {
         </TouchableOpacity>
         {activate ? (
           <TouchableOpacity style={[styles.btn, {backgroundColor: '#000'}]}>
-            <Text style={{color: '#fff'}}>뉴파밍 시작하기</Text>
+            <Text style={{color: '#fff'}}>디파밍 시작하기</Text>
           </TouchableOpacity>
         ) : (
           <TouchableOpacity
             style={[styles.btn, {backgroundColor: 'lightgray'}]}>
-            <Text style={{color: 'gray3'}}>뉴파밍 시작하기</Text>
+            <Text style={{color: 'gray3'}}>디파밍 시작하기</Text>
           </TouchableOpacity>
         )}
       </View>

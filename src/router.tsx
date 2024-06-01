@@ -6,6 +6,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Home from './screens/Home';
 import Profile from './screens/Profile';
 import TestResult from './screens/TestResult';
+import MyDopamine from './screens/MyDopamine';
 
 type MainTabParamList = {
   Home: undefined;
@@ -14,6 +15,7 @@ type MainTabParamList = {
 
 type RootStackParamList = {
   TestResult: undefined;
+  MyDopamine: undefined;
   MainTab: undefined;
 };
 
@@ -22,7 +24,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const MainTab = () => {
   return (
-    <Tab.Navigator initialRouteName="Home">
+    <Tab.Navigator initialRouteName="Home" screenOptions={{headerShown: false}}>
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
@@ -37,6 +39,7 @@ const Router = () => {
       }}>
       <Stack.Screen name="MainTab" component={MainTab} />
       <Stack.Screen name="TestResult" component={TestResult} />
+      <Stack.Screen name="MyDopamine" component={MyDopamine} />
     </Stack.Navigator>
   );
 };
