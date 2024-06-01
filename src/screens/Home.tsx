@@ -1,6 +1,8 @@
-import {Text, View} from 'react-native';
+import {View} from 'react-native';
 import React from 'react';
 import Toast from '../components/common/Toast';
+import HomeBottomSheet from '../components/common/HomeBottomSheet';
+import Calendar from '../componets/calendar/Calendar';
 
 const Home = () => {
   return (
