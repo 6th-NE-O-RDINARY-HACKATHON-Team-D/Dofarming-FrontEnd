@@ -1,34 +1,64 @@
 import React, {useState} from 'react';
-import {StyleSheet} from 'react-native';
 import {Calendar as RNCalendar} from 'react-native-calendars';
-import LeftIcon from '../assets/vectors/left-icon.svg';
-import RightIcon from '../assets/vectors/right-icon.svg';
+import LeftIcon from '../../assets/vectors/left-icon.svg';
+import RightIcon from '../../assets/vectors/right-icon.svg';
 import dayjs from 'dayjs';
+import {Text} from 'react-native';
+import styled from 'styled-components/native';
 
 const Calendar = () => {
   const [selectedDate, setSelectedDate] = useState(
     dayjs().format('YYYY-MM-DD'),
   );
+
   return (
     <RNCalendar
-      style={styles.calendar}
+      // eslint-disable-next-line react/no-unstable-nested-components
+      dayComponent={({date}) => {
+        if (!date) {
+          return;
+        }
+        return (
+          <DateBox
+            selected={date.dateString === selectedDate}
+            onPress={() => {
+              setSelectedDate(date.dateString);
+            }}>
+            {date.dateString === dayjs().format('YYYY-MM-DD') ? (
+              <>
+                <ImgText>{date.day}</ImgText>
+                <ImgBox
+                  source={require('../../assets/image/mock-image.png')}
+                  resizeMode="cover"
+                />
+              </>
+            ) : (
+              <Text>{date.day}</Text>
+            )}
+          </DateBox>
+        );
+      }}
+      // eslint-disable-next-line react-native/no-inline-styles
+      style={{
+        paddingLeft: 20,
+        paddingRight: 20,
+        height: 390,
+      }}
       theme={{
         todayTextColor: '#393F46',
         textDayFontSize: 14,
         textDayFontWeight: 'regular',
         textMonthFontSize: 20,
-        textMonthFontWeight: 'medium',
+        textMonthFontWeight: 'bold',
         textSectionTitleColor: 'rgba(138, 138, 138, 1)',
         selectedDotColor: '#608FFF',
+        weekVerticalMargin: 2,
       }}
       initialDate={selectedDate}
-      onDayPress={day => {
-        setSelectedDate(day.dateString);
-      }}
       hideExtraDays={true}
-      monthFormat={'M월'}
+      monthFormat={'yyyy년 M월'}
       onMonthChange={month => {
-        console.log(month);
+        setSelectedDate(month.dateString);
       }}
       renderArrow={direction =>
         direction === 'left' ? <LeftIcon /> : <RightIcon />
@@ -40,20 +70,36 @@ const Calendar = () => {
           selectedColor: '#608FFF',
         },
       }}
-      // dayComponent={({date, state}) => {
-      //   return <LeftIcon />;
-      // }}
     />
   );
 };
 
 export default Calendar;
 
-const styles = StyleSheet.create({
-  calendar: {
-    paddingTop: 54,
-    paddingBottom: 30,
-    paddingLeft: 20,
-    paddingRight: 20,
-  },
-});
+interface DateBoxProps {
+  selected: boolean;
+}
+
+const DateBox = styled.TouchableOpacity<DateBoxProps>`
+  height: 45px;
+  width: 45px;
+  background-color: #f6f7f8;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+  border-width: 2px;
+  border-color: ${props => (props.selected ? '#608FFF' : '#F6F7F8')};
+`;
+
+const ImgBox = styled.Image`
+  border-radius: 10px;
+  width: 42px;
+  height: 42px;
+`;
+
+const ImgText = styled.Text`
+  position: absolute;
+  z-index: 2;
+  color: #ffffff;
+  font-size: 14px;
+`;
