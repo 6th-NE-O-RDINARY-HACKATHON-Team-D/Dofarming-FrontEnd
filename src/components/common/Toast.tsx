@@ -6,30 +6,34 @@ import ChevronRight from '../../assets/vectors/ChevronRight';
 const Toast = ({
   mission,
   type,
+  color,
+  date,
 }: {
   mission: string;
-  type: 'success' | 'mission';
+  type: string;
+  color: 'dark' | 'light';
+  date?: string;
 }) => {
   const slideAnim = useRef(new Animated.Value(100)).current;
   const fadeAnim = useRef(new Animated.Value(1)).current;
 
-  useEffect(() => {
-    Animated.timing(slideAnim, {
-      toValue: 0,
-      duration: 300,
-      useNativeDriver: true,
-    }).start();
+  //   useEffect(() => {
+  //     Animated.timing(slideAnim, {
+  //       toValue: 0,
+  //       duration: 300,
+  //       useNativeDriver: true,
+  //     }).start();
 
-    const fadeOutTimer = setTimeout(() => {
-      Animated.timing(fadeAnim, {
-        toValue: 0,
-        duration: 500,
-        useNativeDriver: true,
-      }).start();
-    }, 3000);
+  //     const fadeOutTimer = setTimeout(() => {
+  //       Animated.timing(fadeAnim, {
+  //         toValue: 0,
+  //         duration: 500,
+  //         useNativeDriver: true,
+  //       }).start();
+  //     }, 3000);
 
-    return () => clearTimeout(fadeOutTimer);
-  }, [slideAnim, fadeAnim]);
+  //     return () => clearTimeout(fadeOutTimer);
+  //   }, [slideAnim, fadeAnim]);
 
   const getTimeLeftInDay = () => {
     const now = new Date();
@@ -48,30 +52,36 @@ const Toast = ({
 
   const leftTime = getTimeLeftInDay();
 
-  const [slideValue, setSlideValue] = useState(0);
+  //   const [slideValue, setSlideValue] = useState(0);
 
-  useEffect(() => {
-    slideAnim.addListener(({value}: {value: any}) => {
-      setSlideValue(value);
-    });
+  //   useEffect(() => {
+  //     slideAnim.addListener(({value}: {value: any}) => {
+  //       setSlideValue(value);
+  //     });
 
-    return () => {
-      slideAnim.removeAllListeners();
-    };
-  }, [slideAnim]);
+  //     return () => {
+  //       slideAnim.removeAllListeners();
+  //     };
+  //   }, [slideAnim]);
 
   return (
-    <Container style={{transform: [{translateY: slideValue}]}}>
+    <Container style={{backgroundColor: color === 'dark' ? '#393f46' : '#fff'}}>
       <Box />
       <TextBox>
-        <MissionText numberOfLines={1}>{mission}</MissionText>
-        <TimeText>{leftTime} 남았어요</TimeText>
+        <MissionText
+          style={{color: color === 'dark' ? '#fff' : '#000'}}
+          numberOfLines={1}>
+          {mission}
+        </MissionText>
+        <TimeText style={{color: color === 'dark' ? '#bec6d3' : '#79818F'}}>
+          {date ? date : leftTime + ' 남았어요'}
+        </TimeText>
       </TextBox>
       <Button>
-        <ButtonText>
-          {type === 'success' ? '인증 완료' : '인증하기 '}
+        <ButtonText style={{color: color === 'dark' ? '#fff' : '#000'}}>
+          {color === 'light' ? '' : '인증하기 '}
         </ButtonText>
-        {type === 'mission' ? <ChevronRight /> : <View style={{width: 8}} />}
+        {color === 'dark' ? <ChevronRight /> : <View style={{width: 8}} />}
       </Button>
     </Container>
   );
@@ -87,8 +97,6 @@ const Container = styled.View`
   display: flex;
   flex-direction: row;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  position: absolute;
-  bottom: 20px;
   width: 343px;
 `;
 
@@ -108,15 +116,13 @@ const TextBox = styled.View`
 `;
 
 const MissionText = styled.Text`
-  color: #fff;
   font-size: 16px;
   font-weight: 600;
   line-height: 28px;
-  width: 180px;
+  width: 160px;
 `;
 
 const TimeText = styled.Text`
-  color: #bec6d3;
   font-size: 12px;
   font-weight: 400;
   line-height: 14px;
