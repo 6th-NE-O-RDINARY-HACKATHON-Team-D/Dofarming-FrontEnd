@@ -15,7 +15,7 @@ const TestComponent = ({
 }) => {
   return (
     <View style={{flex: 1, backgroundColor: '#F6F7F8'}}>
-      <Title title={questions.title} tags={questions.tags} />
+      <Title id={questions.id} title={questions.title} tags={questions.tags} />
       <Question question={questions.questions} />
       <Buttons>
         {number === 0 ? (

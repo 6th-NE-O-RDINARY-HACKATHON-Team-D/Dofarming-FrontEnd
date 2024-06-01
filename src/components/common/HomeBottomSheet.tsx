@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {BottomSheetBackdrop, BottomSheetModal} from '@gorhom/bottom-sheet';
 import styled from 'styled-components/native';
 import {Text} from 'react-native';
@@ -6,6 +6,8 @@ import PhotoIcon from '../../assets/vectors/photo-icon.svg';
 import GalleryIcon from '../../assets/vectors/gallery-icon.svg';
 import Toast from './Toast';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {launchImageLibrary} from 'react-native-image-picker';
+import axiosInstance from '../../api/AxiosInstance';
 
 interface Props {
   triggerConfetti: () => void;
@@ -23,6 +25,9 @@ const HomeBottomSheet = ({triggerConfetti, mission}: Props) => {
 
   const handleSheetChanges = useCallback((index: number) => {
     console.log('handleSheetChanges', index);
+    if (index === -1) {
+      triggerConfetti();
+    }
   }, []);
 
   const renderBackdrop = useCallback(
@@ -30,30 +35,61 @@ const HomeBottomSheet = ({triggerConfetti, mission}: Props) => {
     [],
   );
 
+  const showCamera = () => {
+    launchImageLibrary(
+      {
+        mediaType: 'photo',
+        maxWidth: 512,
+        maxHeight: 512,
+        includeBase64: true,
+      },
+      res => {
+        const formdata = new FormData();
+        const file = {
+          name: res?.assets?.[0]?.fileName,
+          type: res?.assets?.[0]?.type,
+          uri: res?.assets?.[0]?.uri?.replace('file://', ''),
+        };
+        formdata.append('filedata', file);
+        setClear(true);
+        async () => {
+          try {
+            const response = await axiosInstance.post(
+              `/api/v1/missions/${mission.userMissionId}`,
+              formdata,
+            );
+            console.log('img-response', mission.userMissionId, response);
+          } catch (error) {
+            console.log('error', error);
+          }
+        };
+      },
+    );
+  };
+
+  const renderToast = useMemo(() => {
+    return clear ? (
+      <>
+        <ImageView
+          source={require('../../assets/image/mock-image.png')}
+          resizeMode="cover">
+          <ToastBottomView>
+            <Toast mission={mission} type="digital" />
+          </ToastBottomView>
+        </ImageView>
+      </>
+    ) : (
+      <ToastTopView>
+        <TouchableOpacity onPress={handlePresentModalPress}>
+          <Toast mission={mission} type="digital" />
+        </TouchableOpacity>
+      </ToastTopView>
+    );
+  }, [clear, mission]);
+
   return (
     <Container>
-      {clear ? (
-        <>
-          <ImageView
-            source={require('../../assets/image/mock-image.png')}
-            resizeMode="cover">
-            <ToastBottomView>
-              <Toast
-                mission="술 대신 콜라를 마시는 건 어떨까요"
-                type="digital"
-                color={'light'}
-                date="2024.06.01 21:52"
-              />
-            </ToastBottomView>
-          </ImageView>
-        </>
-      ) : (
-        <ToastTopView>
-          <TouchableOpacity onPress={handlePresentModalPress}>
-            <Toast mission={mission} type="digital" color={'dark'} />
-          </TouchableOpacity>
-        </ToastTopView>
-      )}
+      {renderToast}
       <BottomSheetModal
         ref={bottomSheetModalRef}
         index={1}
@@ -63,11 +99,11 @@ const HomeBottomSheet = ({triggerConfetti, mission}: Props) => {
         <ChildView>
           <Text>인증 하기</Text>
           <BtnView>
-            <ChildBtn>
+            <ChildBtn onPress={triggerConfetti}>
               <PhotoIcon />
               <Text>사진 찍기</Text>
             </ChildBtn>
-            <ChildBtn onPress={triggerConfetti}>
+            <ChildBtn onPress={showCamera}>
               <GalleryIcon />
               <Text>앨범에서 선택</Text>
             </ChildBtn>

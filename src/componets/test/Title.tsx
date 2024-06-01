@@ -1,17 +1,31 @@
-import {View, Text} from 'react-native';
-import styled from 'styled-components';
+import React from 'react';
+import {View, Image} from 'react-native';
+import styled from 'styled-components/native';
+import Digital from '../../assets/vectors/test/digital.svg';
+import Food from '../../assets/vectors/test/food.svg';
+import Drink from '../../assets/vectors/test/drink.svg';
+import Shopping from '../../assets/vectors/test/shopping.svg';
+import Coin from '../../assets/vectors/test/coin.svg';
+import Smoke from '../../assets/vectors/test/smoke.svg';
+import Game from '../../assets/vectors/test/game.svg';
 
-const Title = ({
-  title = '디지털',
-  tags = ['숏폼', '휴대폰중독'],
-}: {
+interface Props {
+  id: number;
   title: string;
   tags: string[];
-}) => {
+}
+
+const Title = ({id, title, tags}: Props) => {
   return (
     <Container>
       <Box>
-        <ImageBox></ImageBox>
+        {id === 0 && <Digital />}
+        {id === 1 && <Food />}
+        {id === 2 && <Drink />}
+        {id === 3 && <Shopping />}
+        {id === 4 && <Coin />}
+        {id === 5 && <Smoke />}
+        {id === 6 && <Game />}
         <TextBox>
           <TitleText>{title} 도파민</TitleText>
           <Tags>
@@ -23,7 +37,7 @@ const Title = ({
           </Tags>
         </TextBox>
       </Box>
-      <View></View>
+      <View />
     </Container>
   );
 };

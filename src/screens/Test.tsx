@@ -45,7 +45,7 @@ const Buttons = styled.View`
   padding: 0 24px;
 `;
 
-const Questions = [
+export const Questions = [
   {
     id: 0,
     title: '디지털',
