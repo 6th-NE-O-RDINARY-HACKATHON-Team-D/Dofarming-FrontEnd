@@ -1,10 +1,13 @@
 import styled from 'styled-components';
-import {View} from 'react-native';
+import {SafeAreaView} from 'react-native';
 import TestComponent from '../componets/test/TestComponent';
 import React, {useState} from 'react';
+import Header from '../components/common/Header';
+import {useNavigation} from '@react-navigation/native';
 
 const Test = () => {
   const [number, setNumber] = useState<number>(0);
+  const navigation = useNavigation();
 
   const handlePageChange = (direction: string) => {
     if (direction === 'left') {
@@ -15,13 +18,19 @@ const Test = () => {
   };
 
   return (
-    <View style={{flex: 1, backgroundColor: '#F6F7F8'}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: '#F6F7F8'}}>
+      <Header
+        left={true}
+        leftHandler={() => navigation.goBack()}
+        right={false}
+      />
+
       <TestComponent
         questions={Questions[number]}
         handelPageChange={handlePageChange}
         number={number}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 export default Test;
