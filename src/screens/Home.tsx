@@ -1,6 +1,4 @@
-
 import {View, StyleSheet, Button, Animated} from 'react-native';
-
 import React from 'react';
 import Calendar from '../componets/calendar/Calendar';
 import HomeBottomSheet from '../components/common/HomeBottomSheet';
