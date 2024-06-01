@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Calendar as RNCalendar} from 'react-native-calendars';
 import LeftIcon from '../../assets/vectors/left-icon.svg';
 import RightIcon from '../../assets/vectors/right-icon.svg';
@@ -6,11 +6,12 @@ import dayjs from 'dayjs';
 import {Text} from 'react-native';
 import styled from 'styled-components/native';
 
-const Calendar = () => {
-  const [selectedDate, setSelectedDate] = useState(
-    dayjs().format('YYYY-MM-DD'),
-  );
+interface Props {
+  selectedDate: string;
+  setSelectedDate: (v: string) => void;
+}
 
+const Calendar = ({selectedDate, setSelectedDate}: Props) => {
   return (
     <RNCalendar
       // eslint-disable-next-line react/no-unstable-nested-components
@@ -40,7 +41,7 @@ const Calendar = () => {
       }}
       // eslint-disable-next-line react-native/no-inline-styles
       style={{
-        marginTop: 30,
+        // marginTop: 30,
         paddingLeft: 20,
         paddingRight: 20,
         height: 400,

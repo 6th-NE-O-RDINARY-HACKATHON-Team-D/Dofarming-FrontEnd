@@ -7,6 +7,7 @@ import LottieView from 'lottie-react-native';
 import Defarming from '../assets/vectors/defarming-txt.svg';
 
 import axiosInstance from '../api/AxiosInstance';
+import dayjs from 'dayjs';
 
 const Home = () => {
   const confettiRef = useRef<LottieView>(null);
@@ -16,20 +17,17 @@ const Home = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<any>(null);
 
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = String(today.getMonth() + 1).padStart(2, '0');
-  const day = String(today.getDate()).padStart(2, '0');
-
-  const todayString = `${year}-${month}-${day}`;
+  const [selectedDate, setSelectedDate] = useState(
+    dayjs().format('YYYY-MM-DD'),
+  );
 
   useEffect(() => {
     const fetchMission = async () => {
       try {
         const response = await axiosInstance.get(
-          '/api/v1/missions?date=' + todayString,
+          '/api/v1/missions?date=' + selectedDate,
         );
-        // console.log('response', response.data.result);
+        console.log('response', selectedDate, response.data.result);
         setTodayMission(response.data.result);
         setLoading(false);
       } catch (error) {
@@ -39,7 +37,7 @@ const Home = () => {
       }
     };
     fetchMission();
-  }, []);
+  }, [selectedDate]);
 
   function triggerConfetti() {
     confettiRef.current?.play(0);
@@ -71,7 +69,7 @@ const Home = () => {
         style={styles.lottie}
         resizeMode="cover"
       />
-      <Calendar />
+      <Calendar selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
       <HomeBottomSheet
         triggerConfetti={triggerConfetti}
         mission={todayMission}
