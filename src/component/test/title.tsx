@@ -33,6 +33,7 @@ export default Title;
 const Container = styled.View`
   background-color: #fff;
   padding: 20px 24px;
+  margin-bottom: 24px;
 `;
 
 const Box = styled.View`
