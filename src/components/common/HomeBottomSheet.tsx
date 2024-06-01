@@ -24,11 +24,7 @@ const HomeBottomSheet = () => {
 
   return (
     <Container>
-      <ModalBtn
-        onPress={handlePresentModalPress}
-        title="Present Modal"
-        color="black"
-      />
+      {/* <ModalBtn onPress={handlePresentModalPress} /> */}
       <BottomSheetModal
         ref={bottomSheetModalRef}
         index={1}
@@ -75,10 +71,7 @@ const BtnView = styled.View`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-`;
-
-const ModalBtn = styled.Button`
-  height: 10px;
+  align-items: center;
 `;
 
 const ChildBtn = styled.TouchableOpacity`
