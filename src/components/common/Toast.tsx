@@ -54,7 +54,15 @@ const Toast = ({mission, type}: {mission: any; type: string}) => {
   //     };
   //   }, [slideAnim]);
 
-  console.log('s', mission);
+  const date = new Date(mission?.updatedAt);
+  const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1)
+    .toString()
+    .padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date
+    .getHours()
+    .toString()
+    .padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
+
+  console.log('formattedDate', formattedDate);
   return (
     <Container
       style={{backgroundColor: !mission?.isSuccess ? '#393f46' : '#fff'}}>
@@ -66,7 +74,7 @@ const Toast = ({mission, type}: {mission: any; type: string}) => {
           {mission?.missionContent}
         </MissionText>
         <TimeText style={{color: !mission?.isSuccess ? '#bec6d3' : '#79818F'}}>
-          {mission?.isSuccess ? mission?.updatedAt : leftTime + ' 남았어요'}
+          {mission?.isSuccess ? formattedDate : leftTime + ' 남았어요'}
         </TimeText>
       </TextBox>
       <Button>

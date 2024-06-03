@@ -14,6 +14,7 @@ const Home = () => {
   const opacity = useRef(new Animated.Value(0)).current;
 
   const [todayMission, setTodayMission] = useState<any>(null);
+  const [calendarMission, setCalendarMission] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<any>(null);
 
@@ -24,11 +25,9 @@ const Home = () => {
   useEffect(() => {
     const fetchMission = async () => {
       try {
-        const response = await axiosInstance.get(
-          '/api/v1/missions?date=' + selectedDate,
-        );
-        console.log('response', selectedDate, response.data.result);
-        setTodayMission(response.data.result);
+        const response = await axiosInstance.get('/api/v1/missions/calender');
+        setTodayMission(response.data.result.todayMission);
+        setCalendarMission(response.data.result.calendar);
         setLoading(false);
       } catch (error) {
         console.log('error', error);
@@ -69,7 +68,11 @@ const Home = () => {
         style={styles.lottie}
         resizeMode="cover"
       />
-      <Calendar selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
+      <Calendar
+        missions={calendarMission}
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
+      />
       <HomeBottomSheet
         triggerConfetti={triggerConfetti}
         mission={todayMission}

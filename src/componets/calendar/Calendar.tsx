@@ -9,9 +9,10 @@ import styled from 'styled-components/native';
 interface Props {
   selectedDate: string;
   setSelectedDate: (v: string) => void;
+  missions: any;
 }
 
-const Calendar = ({selectedDate, setSelectedDate}: Props) => {
+const Calendar = ({selectedDate, setSelectedDate, missions}: Props) => {
   return (
     <RNCalendar
       // eslint-disable-next-line react/no-unstable-nested-components
